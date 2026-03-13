@@ -18,46 +18,41 @@
         /* Hero Section */
         .hero-section {
             position: relative;
-            height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             overflow: hidden;
+            background: white;
         }
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('https://placehold.co/1920x1080') center/cover;
-            opacity: 0.3;
-            z-index: 0;
-        }
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
-            z-index: 1;
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
         }
         .hero-content {
             position: relative;
             z-index: 2;
             text-align: center;
-            color: white;
+            color: #1f2937;
             max-width: 800px;
-            padding: 0 20px;
+            padding: 40px 20px;
+            width: 100%;
         }
         .hero-content h1 {
             font-size: 3.5rem;
             font-weight: 300;
             margin-bottom: 20px;
             line-height: 1.2;
+            display: none;
         }
         .hero-content p {
             font-size: 1.25rem;
             font-weight: 300;
             margin-bottom: 30px;
             opacity: 0.95;
+            display: none;
         }
         
         /* Section Styles */
@@ -290,6 +285,9 @@
             .section-title {
                 font-size: 1.75rem;
             }
+            .hero-image {
+                max-height: 60vh;
+            }
         }
     </style>
 </head>
@@ -315,9 +313,11 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
+        <picture>
+            <source media="(min-width: 769px)" srcset="https://i.postimg.cc/d34ggZ2L/letybo-hero-banner-PC.jpg">
+            <img src="https://i.postimg.cc/Wz2Q9wks/letybo-hero-banner-mobile.jpg" alt="精準撒平歲月痕跡" class="hero-image">
+        </picture>
         <div class="hero-content">
-            <h1>精準撫平歲月痕跡</h1>
-            <p>透過肉毒桿菌素除皺與塑形，重現年輕光采。了解最新療程原理與效果。</p>
             <div class="flex gap-4 justify-center">
                 <button class="btn-primary">立即預約</button>
                 <button class="btn-secondary">了解更多</button>
