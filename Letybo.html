@@ -326,18 +326,29 @@
                     <a href="#brands" class="text-gray-600 hover:text-bronze transition">品牌比較</a>
                     <a href="#faq" class="text-gray-600 hover:text-bronze transition">常見問題</a>
                 </nav>
-                <a href="https://lin.ee/BW7xMM6" target="_blank" class="btn-primary">預約諮詢</a>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-bronze transition text-2xl">☰</button>
+                <a href="https://lin.ee/BW7xMM6" target="_blank" class="btn-primary hidden md:inline-block">預約諮詢</a>
             </div>
+            <!-- Mobile Navigation Menu -->
+            <nav id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-200">
+                <a href="#clinical" class="block py-2 text-gray-600 hover:text-bronze transition">臨床數據</a>
+                <a href="#principle" class="block py-2 text-gray-600 hover:text-bronze transition">原理</a>
+                <a href="#applications" class="block py-2 text-gray-600 hover:text-bronze transition">應用部位</a>
+                <a href="#brands" class="block py-2 text-gray-600 hover:text-bronze transition">品牌比較</a>
+                <a href="#faq" class="block py-2 text-gray-600 hover:text-bronze transition">常見問題</a>
+                <a href="https://lin.ee/BW7xMM6" target="_blank" class="btn-primary block text-center mt-4">預約諮詢</a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" style="margin: 0; padding: 0; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
         <picture>
             <source media="(min-width: 769px)" srcset="https://i.postimg.cc/d34ggZ2L/letybo-hero-banner-PC.jpg">
-            <img src="https://i.postimg.cc/Wz2Q9wks/letybo-hero-banner-mobile.jpg" alt="精準撒平歲月痕跡" class="hero-image">
+            <img src="https://i.postimg.cc/Wz2Q9wks/letybo-hero-banner-mobile.jpg" alt="精準撒平歲月痕跡" class="hero-image" style="width: 100%; height: auto; display: block;">
         </picture>
-        <div class="hero-content">
+        <div class="hero-content" style="width: 100%; padding: 2rem 1rem;">
             <div class="flex gap-4 justify-center">
                 <a href="https://lin.ee/BW7xMM6" target="_blank" class="btn-primary">立即預約</a>
             </div>
@@ -1070,6 +1081,24 @@
                 </div>
             `;
             faqContainer.appendChild(faqItem);
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
         });
     </script>
 
