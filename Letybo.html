@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肉毒桿菌 Letybo | 北秀醫美健康管理診所</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; color: #333; }
+        .bg-bronze { background-color: #B08525; }
+        .text-bronze { color: #B08525; }
+        .border-bronze { border-color: #B08525; }
+        
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://placehold.co/1920x1080') center/cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        /* Section Styles */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1f2937;
+        }
+        .section-subtitle {
+            font-size: 1.1rem;
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        
+        /* FAQ Accordion */
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: background-color 0.2s;
+        }
+        .faq-question:hover {
+            background-color: #f9fafb;
+        }
+        .faq-question h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+        }
+        .faq-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: #f9fafb;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 16px 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .faq-answer p {
+            color: #666;
+            line-height: 1.6;
+            font-weight: 300;
+            margin: 0;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background-color: #1f2937;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            background-color: #111827;
+        }
+        .btn-secondary {
+            background-color: white;
+            color: #1f2937;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid #1f2937;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-secondary:hover {
+            background-color: #f9fafb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="text-xl font-medium text-gray-900">
+                    <a href="/" class="text-bronze hover:text-opacity-80">北秀診所</a>
+                </div>
+                <nav class="hidden md:flex gap-8">
+                    <a href="#principle" class="text-gray-600 hover:text-bronze transition">原理</a>
+                    <a href="#applications" class="text-gray-600 hover:text-bronze transition">應用部位</a>
+                    <a href="#brands" class="text-gray-600 hover:text-bronze transition">品牌比較</a>
+                    <a href="#faq" class="text-gray-600 hover:text-bronze transition">常見問題</a>
+                </nav>
+                <button class="btn-primary">預約諮詢</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>精準撫平歲月痕跡</h1>
+            <p>透過肉毒桿菌素除皺與塑形，重現年輕光采。了解最新療程原理與效果。</p>
+            <div class="flex gap-4 justify-center">
+                <button class="btn-primary">立即預約</button>
+                <button class="btn-secondary">了解更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="section-title">肉毒桿菌素是什麼？</h2>
+            <p class="text-lg text-gray-600 font-light leading-relaxed">
+                肉毒桿菌素（Botulinum Toxin Type A）是一種從肉毒梭狀桿菌萃取、經過高度純化的蛋白質。在醫學美容領域，A 型肉毒桿菌素因其毒性最弱、經過嚴格純化且臨床研究最完整而被廣泛應用，安全性與效果已獲得全球醫療機構認可。
+            </p>
+        </div>
+    </section>
+
+    <!-- Principle Section -->
+    <section id="principle" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">作用原理</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://placehold.co/500x400" alt="作用原理" class="rounded-lg shadow-lg">
+                </div>
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-2xl font-medium text-gray-900 mb-3">神經肌肉傳導機制</h3>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            肌肉運動由大腦透過神經末梢分泌「乙醯膽鹼」傳導物質進行控制。乙醯膽鹼就像傳令兵，負責將「收縮」指令傳給肌肉，使肌肉產生運動。
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-medium text-gray-900 mb-3">肉毒的作用方式</h3>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            肉毒桿菌素注射後，會暫時性阻斷乙醯膽鹼的釋放，使神經與肌肉之間的通訊中斷。當肌肉收不到收縮指令，自然就放鬆下來，從而達到除皺、瘦臉、瘦腿等效果。
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-medium text-gray-900 mb-3">可逆性與安全性</h3>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            肉毒桿菌素的藥理作用具有暫時性與可逆性。人體會在 6 個月內將藥物完全代謝，神經末梢與肌肉間的傳導功能將自然恢復，無需擔心依賴性或永久累積。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">六大醫美應用</h2>
+            <p class="section-subtitle">肉毒桿菌素能抑制肌肉收縮，凡是與肌肉過度活躍有關的問題，幾乎都能用肉毒來改善。</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Application Card 1 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="臉部除皺" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">臉部除皺</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">撫平動態紋路</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            針對額肌、眼輪匝肌、皺眉肌等表情肌收縮引起的動態紋路進行改善。肉毒桿菌素能有效減少抬頭紋、魚尾紋、皺眉紋的深度。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                紋路深度減少 50-80%
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                表情自然流暢
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                效果維持 3-4 個月
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Application Card 2 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="瘦小臉" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">瘦小臉</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">改善國字臉</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            針對咀嚼肌肥厚導致的寬臉型進行改善。肉毒注射使咀嚼肌逐漸萎縮，根據「用進廢退」原理，臉型從方正的國字臉逐漸變成柔和的鵝蛋臉。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                咀嚼肌寬度縮減 20-30%
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                臉型柔和修長
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                效果維持 4-6 個月
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Application Card 3 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="瘦小腿" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">瘦小腿</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">改善蘿蔔腿</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            針對腓腸肌肥大的肌肉型蘿蔔腿進行改善。肉毒注射使小腿肌肉逐漸放鬆並萎縮，線條從粗壯變得細緻修長。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                小腿圍縮減 2-4 公分
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                線條修長纖細
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                效果維持 4-6 個月
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Application Card 4 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="瘦肩膀" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">瘦肩膀</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">改善水牛肩</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            針對斜方肌發達導致的厚重肩膀進行改善。肉毒注射使肩膀線條變得纖細，脖子視覺上拉長，穿衣更顯氣質。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                肩線纖細優雅
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                脖子視覺拉長
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                附加改善肩頸痠痛
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Application Card 5 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="腋下止汗" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">腋下止汗</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">改善多汗症</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            肉毒桿菌素能抑制汗腺的神經傳導，有效減少腋下出汗量。由於汗水減少，細菌分解汗液產生的汗臭味也跟著降低。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                出汗量明顯減少
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                異味改善顯著
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                效果維持 6-8 個月
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Application Card 6 -->
+                <div class="card">
+                    <img src="https://placehold.co/400x300" alt="進階應用" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-gray-900 mb-1">進階應用</h3>
+                        <p class="text-sm text-gray-500 mb-3 font-light">多元治療選擇</p>
+                        <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                            除了上述常見用途，肉毒桿菌素還可用於頸闊肌拉提（娜芙蒂蒂拉提）、偏頭痛緩解、嘴角眉尾上揚等進階應用。
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                頸部輪廓緊緻
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                肌肉緊繃型頭痛緩解
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                                表情更年輕活力
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section id="brands" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">品牌比較</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Brand 1 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-medium text-gray-900">保妥適</h3>
+                    <p class="text-sm text-gray-500 font-light">Botox</p>
+                    <div class="flex gap-2 mt-3 mb-6">
+                        <span class="inline-block px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-full font-light">美國</span>
+                        <span class="inline-block px-3 py-1 bg-gray-900 text-white text-xs rounded-full font-light">經典肉毒</span>
+                    </div>
+                    <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                        作為肉毒桿菌素的開創者，保妥適擁有超過 40 年的臨床應用經驗。
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            FDA 首次核准品牌
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            臨床數據最完整
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            全球使用最廣泛
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Brand 2 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-medium text-gray-900">儷緻</h3>
+                    <p class="text-sm text-gray-500 font-light">Dysport</p>
+                    <div class="flex gap-2 mt-3 mb-6">
+                        <span class="inline-block px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-full font-light">英國</span>
+                        <span class="inline-block px-3 py-1 bg-gray-900 text-white text-xs rounded-full font-light">皇家肉毒</span>
+                    </div>
+                    <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                        儷緻具有較強的擴散能力，特別適合需要大面積放鬆的部位。
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            擴散範圍較廣
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            見效速度快
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            適合大面積治療
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Brand 3 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-medium text-gray-900">淨優明</h3>
+                    <p class="text-sm text-gray-500 font-light">Xeomin</p>
+                    <div class="flex gap-2 mt-3 mb-6">
+                        <span class="inline-block px-3 py-1 bg-gray-200 text-gray-700 text-xs rounded-full font-light">德國</span>
+                        <span class="inline-block px-3 py-1 bg-gray-900 text-white text-xs rounded-full font-light">天使肉毒</span>
+                    </div>
+                    <p class="text-gray-600 font-light text-sm mb-4 leading-relaxed">
+                        淨優明採用獨特的純化技術，去除複合性蛋白質，減少免疫反應。
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            不含複合性蛋白質
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            降低抗藥性風險
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600 font-light">
+                            <span class="w-1 h-1 rounded-full bg-gray-900 mt-2 flex-shrink-0"></span>
+                            純淨配方
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="section-title">效果時間軸</h2>
+            <div class="space-y-8">
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-light">1</div>
+                        <div class="w-1 h-16 bg-gray-300 mt-2"></div>
+                    </div>
+                    <div class="pb-8">
+                        <h3 class="text-lg font-medium text-gray-900">即時效果</h3>
+                        <p class="text-gray-600 font-light">注射後立即可進行日常活動，無需恢復期。</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-light">2</div>
+                        <div class="w-1 h-16 bg-gray-300 mt-2"></div>
+                    </div>
+                    <div class="pb-8">
+                        <h3 class="text-lg font-medium text-gray-900">初步見效（3-7 天）</h3>
+                        <p class="text-gray-600 font-light">臉部除皺效果開始顯現，皺紋深度逐漸減少。</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-light">3</div>
+                        <div class="w-1 h-16 bg-gray-300 mt-2"></div>
+                    </div>
+                    <div class="pb-8">
+                        <h3 class="text-lg font-medium text-gray-900">最佳效果（2-4 週）</h3>
+                        <p class="text-gray-600 font-light">瘦臉、瘦腿等輪廓改善效果達到最明顯，肌肉充分放鬆。</p>
+                    </div>
+                </div>
+                <div class="flex gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center font-light">4</div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900">效果維持（3-6 個月）</h3>
+                        <p class="text-gray-600 font-light">效果穩定維持，根據個人體質與代謝速度，通常需在 3-6 個月後進行補打。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Precautions Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="section-title">療程須知</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg p-8 shadow-sm">
+                    <h3 class="text-xl font-medium text-gray-900 mb-4">術前注意事項</h3>
+                    <ul class="space-y-3">
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">確認無重症肌無力或神經肌肉疾病</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">懷孕或哺乳中應告知醫師</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">避免服用抗凝血藥物</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">術前一週避免過度日曬</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-lg p-8 shadow-sm">
+                    <h3 class="text-xl font-medium text-gray-900 mb-4">術後護理</h3>
+                    <ul class="space-y-3">
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">4 小時內避免平躺、按摩或劇烈運動</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">1 週內避免高溫場所（三溫暖、溫泉）</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">4 小時後可進行日常化妝與護膚</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-gray-900 font-light">•</span>
+                            <span class="text-gray-600 font-light">2 週後複診評估效果並進行微調</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="section-title">常見問題</h2>
+            <div class="space-y-4" id="faqContainer">
+                <!-- FAQ items will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gray-900 text-white py-20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-light mb-6">準備好開始了嗎？</h2>
+            <p class="text-lg text-gray-200 font-light mb-8">
+                預約免費諮詢，讓我們的專業醫療團隊為您評估最適合的肉毒桿菌治療方案。
+            </p>
+            <button class="btn-primary">立即預約諮詢</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t border-gray-200 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-medium text-gray-900 mb-4">北秀診所</h3>
+                    <p class="text-sm text-gray-600 font-light">專業醫美診所，提供最新的肉毒桿菌治療服務。</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-4">快速連結</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#principle" class="text-gray-600 hover:text-bronze font-light">原理</a></li>
+                        <li><a href="#applications" class="text-gray-600 hover:text-bronze font-light">應用部位</a></li>
+                        <li><a href="#brands" class="text-gray-600 hover:text-bronze font-light">品牌比較</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-4">聯絡方式</h4>
+                    <ul class="space-y-2 text-sm text-gray-600 font-light">
+                        <li>電話：(02) XXXX-XXXX</li>
+                        <li>郵箱：info@topshow.clinic</li>
+                        <li>地址：台北市 XX 區</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-gray-900 mb-4">營業時間</h4>
+                    <ul class="space-y-2 text-sm text-gray-600 font-light">
+                        <li>週一至週五：10:00-19:00</li>
+                        <li>週六：10:00-17:00</li>
+                        <li>週日：休診</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 pt-8 text-center text-sm text-gray-600 font-light">
+                <p>&copy; 2026 北秀診所。版權所有。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Data
+        const faqData = [
+            {
+                question: "肉毒桿菌素會不會造成中毒？",
+                answer: "肉毒桿菌素在醫美應用中非常安全。以瘦小臉為例，單次施打僅約 40-60U。根據毒理學研究，以體重 60 公斤成人換算，肉毒桿菌素的致死劑量約需 2,500-3,000U，與臨床使用劑量相差逾 10 倍以上，具有極高的安全係數。此外，肉毒桿菌素的藥理作用具有暫時性與可逆性，人體會在 6 個月內將藥物完全代謝。"
+            },
+            {
+                question: "打肉毒會讓臉變僵硬嗎？",
+                answer: "臉部僵硬通常是由於劑量過大或注射位置不當所致。在專業醫師的精準注射下，使用適當劑量的肉毒桿菌素，能夠在保持自然表情的前提下，有效改善皺紋與輪廓。經驗豐富的醫師會根據患者的肌肉厚度、面部結構與審美需求進行個性化治療。"
+            },
+            {
+                question: "肉毒效果能維持多久？",
+                answer: "肉毒桿菌素的效果通常維持 3-6 個月，因人而異。一般而言，首次注射的效果維持時間較短（約 3-4 個月），多次重複注射後，效果維持時間會逐漸延長至 5-6 個月。這是因為肌肉逐漸適應並保持放鬆狀態。為了維持理想效果，建議每 3-6 個月進行一次補打。"
+            },
+            {
+                question: "肉毒有副作用嗎？",
+                answer: "肉毒桿菌素的副作用通常輕微且暫時。常見的包括注射部位輕微腫脹、瘀青或短暫的頭痛。極少數情況下可能出現眼瞼下垂或眉毛位置改變，但這些症狀通常在 2-4 週內自行恢復。嚴重副作用非常罕見，且多與不當操作有關。選擇有資質的醫療機構與經驗豐富的醫師至關重要。"
+            },
+            {
+                question: "肉毒會產生抗藥性嗎？",
+                answer: "長期使用肉毒桿菌素可能導致部分患者產生抗藥性，即身體產生中和抗體。這種情況的發生率約為 5-10%，且多與高頻率注射或過量使用有關。為了降低抗藥性風險，建議遵循適當的注射間隔（通常為 3-6 個月），並與醫師溝通選擇合適的品牌與劑量。某些品牌如淨優明（Xeomin）因不含複合性蛋白質，可能降低抗藥性風險。"
+            },
+            {
+                question: "打完肉毒多久可以化妝？",
+                answer: "建議在注射後 4 小時內避免化妝，以防止細菌感染與藥物擴散。4 小時後可以輕輕進行日常護膚與化妝。但應避免在注射部位進行過度按摩或揉搓。此外，建議在注射後 1 週內避免使用含有刺激成分的護膚品，以減少皮膚敏感反應。"
+            },
+            {
+                question: "肉毒多久打一次最好？",
+                answer: "根據臨床經驗，肉毒桿菌素的最佳注射間隔為 3-6 個月。首次注射後，建議在 2 週後進行複診，以評估效果並進行必要的微調。之後，根據效果維持情況，通常每 3-4 個月進行一次補打。過於頻繁的注射（少於 3 個月）可能增加抗藥性風險，而間隔過長則可能導致效果逐漸消退。與醫師溝通制定個性化的治療計畫至關重要。"
+            }
+        ];
+
+        // Render FAQ
+        const faqContainer = document.getElementById('faqContainer');
+        faqData.forEach((item, index) => {
+            const faqItem = document.createElement('div');
+            faqItem.className = 'faq-item';
+            faqItem.innerHTML = `
+                <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                    <h3>${item.question}</h3>
+                    <div class="faq-toggle">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                            <path d="M5 7.5l5 5 5-5" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="faq-answer">
+                    <p>${item.answer}</p>
+                </div>
+            `;
+            faqContainer.appendChild(faqItem);
+        });
+    </script>
+</body>
+</html>
