@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北秀醫美健康管理診所 | 專業、精緻、美學願景</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; color: #333; }
+        .bg-bronze { background-color: #B08525; }
+        .text-bronze { color: #B08525; }
+        .border-bronze { border-color: #B08525; }
+        
+        /* Hero Carousel Styles */
+        .hero-section { position: relative; overflow: hidden; }
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
+        }
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        /* Desktop: Fixed parallax-like effect */
+        @media (min-width: 769px) {
+            .hero-section { height: 100vh; }
+            .hero-background img { background-attachment: fixed; }
+        }
+
+        /* Mobile: Perfect Square, No overlap, No crop */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: calc(100vw + 80px) !important;
+                padding-top: 80px !important;
+                background-color: #fff;
+            }
+            .hero-section > a {
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100vw;
+            }
+            .hero-section .hero-background {
+                height: 100%;
+                background-attachment: scroll;
+            }
+            .hero-section img {
+                object-fit: cover !important;
+                object-position: center center;
+            }
+            .hero-indicators { bottom: 20px !important; }
+        }
+        
+        .hero-background.active { opacity: 1; z-index: 10; }
+        
+        /* Custom Scrollbar Hide */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Mobile Menu */
+        #mobileMenu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 40;
+            flex-direction: column;
+        }
+        #mobileMenu.active {
+            display: flex;
+        }
+        #mobileMenu a {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            color: #666;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        #mobileMenu a:hover {
+            background-color: #f9fafb;
+            color: #B08525;
+        }
+
+        /* Carousel Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(176, 133, 37, 0.8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .nav-btn:hover { background-color: rgba(176, 133, 37, 1); }
+        @media (max-width: 1023px) { .nav-btn { display: none; } }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- ==================== 1. Navigation ==================== -->
+    <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm h-20">
+        <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="#" class="flex items-center">
+                    <img src="https://i.postimg.cc/L52YGx9V/bei-xiu-logo.png" alt="北秀醫美 Logo" class="h-12 md:h-14">
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-gray-600 hover:text-bronze transition font-normal">首頁</a>
+                <a href="#about" class="text-gray-600 hover:text-bronze transition font-normal">品牌哲學</a>
+                <a href="#treatments" class="text-gray-600 hover:text-bronze transition font-normal">核心療程</a>
+                <a href="#team" class="text-gray-600 hover:text-bronze transition font-normal">醫師團隊</a>
+                <a href="#blog" class="text-gray-600 hover:text-bronze transition font-normal">美學專欄</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-bronze transition font-normal">美學見證</a>
+            </div>
+
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="text-gray-600 p-2 hover:text-bronze transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <a href="https://lin.ee/BW7xMM6" class="bg-bronze text-white px-4 md:px-6 py-2 md:py-2.5 rounded-full font-medium hover:opacity-90 transition shadow-md text-sm md:text-base whitespace-nowrap">LINE 預約</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu">
+        <a href="#" onclick="closeMobileMenu()">首頁</a>
+        <a href="#about" onclick="closeMobileMenu()">品牌哲學</a>
+        <a href="#treatments" onclick="closeMobileMenu()">核心療程</a>
+        <a href="#team" onclick="closeMobileMenu()">醫師團隊</a>
+        <a href="#blog" onclick="closeMobileMenu()">美學專欄</a>
+        <a href="#testimonials" onclick="closeMobileMenu()">美學見證</a>
+    </div>
+
+    <!-- ==================== 2. Hero Section ==================== -->
+    <section class="hero-section">
+        <a id="heroBannerLink" href="https://tpshow.net/ondapro-38600" target="_blank" class="block">
+            <div id="heroBg0" class="hero-background active">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="https://i.postimg.cc/NFCXT1tm/ang-da-dian-bo-banner-mobile.jpg">
+                    <img src="https://i.postimg.cc/NM04982x/Banner-ang-da-PC-new.jpg" alt="昂達超微波">
+                </picture>
+            </div>
+            <div id="heroBg1" class="hero-background">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="https://i.postimg.cc/KjpTLnbK/wu-shuang-ying-pian-banner-mobile.jpg">
+                    <img src="https://i.postimg.cc/B6wCx82N/Banner-wu-shuang-PC-new.jpg" alt="無雙電波">
+                </picture>
+            </div>
+            <div id="heroBg2" class="hero-background">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="https://i.postimg.cc/gjthRvp3/ni-shi-zhen-banner-mobile.jpg">
+                    <img src="https://i.postimg.cc/V6HFjSXD/Banner-ni-shi-zhen-PC-new.jpg" alt="逆時針">
+                </picture>
+            </div>
+        </a>
+
+        <div class="hero-indicators absolute bottom-10 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
+            <button onclick="setHero(0)" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition" id="dot0"></button>
+            <button onclick="setHero(1)" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition" id="dot1"></button>
+            <button onclick="setHero(2)" class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition" id="dot2"></button>
+        </div>
+    </section>
+
+    <!-- ==================== 3. Brand Philosophy ==================== -->
+    <section id="about" class="py-24 md:py-24 py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-medium mb-12 md:mb-12 mb-8 tracking-wider">品牌哲學</h2>
+            
+            <!-- Environment Carousel (Widened and moved under title) -->
+            <div class="relative mb-16">
+                <div class="nav-btn left-0" onclick="scrollCarousel('environmentCarousel', 'left')">‹</div>
+                <div class="nav-btn right-0" onclick="scrollCarousel('environmentCarousel', 'right')">›</div>
+                <div id="environmentCarousel" class="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide snap-x scroll-smooth">
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/0yx9Cn0t/environment1.jpg" alt="診所環境 1" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/2SmCxG7K/environment2.jpg" alt="診所環境 2" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/FHmhxpVJ/environment3.jpg" alt="診所環境 3" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/521fmgSZ/environment4.jpg" alt="診所環境 4" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/521fmgmW/environment5.jpg" alt="診所環境 5" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                    <div class="flex-none w-80 md:w-[450px] snap-center overflow-hidden rounded-2xl shadow-lg">
+                        <img src="https://i.postimg.cc/fRZMvCfp/environment6.jpg" alt="診所環境 6" class="w-full h-56 md:h-72 object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <p class="text-lg text-gray-600 leading-relaxed font-normal mb-8">
+                    秀傳醫療體系深耕 50 年，醫美服務超過 20 年。以安全、可靠、專業為核心，獲得國家認證。
+                </p>
+                <p class="text-lg text-gray-600 leading-relaxed font-normal mb-12 md:mb-12 mb-8">
+                    我們提供精準減重 × 客製化美學雙核心服務，量身訂製健康與美麗。全程使用原廠貨，價格透明，讓您放心享受專業醫美體驗。
+                </p>
+                <div class="flex justify-center space-x-8 text-bronze font-medium">
+                    <span>✓ 國家品質認證</span>
+                    <span>✓ ISO9001 認證</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. Core Treatments ==================== -->
+    <section id="treatments" class="py-20 md:py-20 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-medium mb-4">核心療程</h2>
+                <div class="w-20 h-1 bg-bronze mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Density -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://i.postimg.cc/CMNhLhM1/liao-cheng-xiang-mu-mo-te1.jpg" alt="無雙電波" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-3">無雙電波 Density</h3>
+                        <p class="text-gray-500 text-sm mb-4 font-normal">臉部輪廓線模糊下垂、雙頰凹陷皺紋明顯、追求自然提拉且低痛感。</p>
+                        <a href="https://tpshow.net/density-38407" class="text-bronze font-medium inline-flex items-center hover:translate-x-2 transition">了解更多詳情 →</a>
+                    </div>
+                </div>
+                <!-- Onda -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://i.postimg.cc/y6P1Y16S/liao-cheng-xiang-mu-mo-te2.jpg" alt="昂達超微波" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-3">昂達超微波 Onda Pro</h3>
+                        <p class="text-gray-500 text-sm mb-4 font-normal">局部頑固脂肪囤積、產後或減重後肌膚鬆弛橘皮、追求無創無恢復期體雕。</p>
+                        <a href="https://tpshow.net/ondapro-38600" class="text-bronze font-medium inline-flex items-center hover:translate-x-2 transition">了解更多詳情 →</a>
+                    </div>
+                </div>
+                <!-- Profhilo -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300">
+                    <div class="relative overflow-hidden aspect-video">
+                        <img src="https://i.postimg.cc/zDjzXzDH/liao-cheng-xiang-mu-mo-te4.jpg" alt="逆時針" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-medium mb-3">逆時針 Profhilo</h3>
+                        <p class="text-gray-500 text-sm mb-4 font-normal">肌膚極度乾燥缺乏光澤彈性、頸部手部細微部位鬆弛、想要實現全臉透亮感。</p>
+                        <a href="https://tpshow.net/Profhilo-38615" class="text-bronze font-medium inline-flex items-center hover:translate-x-2 transition">了解更多詳情 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mt-8">
+                <!-- Plastic Surgery -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col md:flex-row">
+                    <div class="md:w-1/2 overflow-hidden">
+                        <img src="https://i.postimg.cc/ZYcbKbYd/liao-cheng-xiang-mu-mo-te3.jpg" alt="整形外科" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-xl font-medium mb-3">專業整形外科</h3>
+                        <p class="text-gray-500 text-sm mb-4 font-normal">由資深專科醫師執刀，提供眼部精雕、抽脂體雕等全方位美感重塑。</p>
+                        <a href="#" class="text-bronze font-medium inline-flex items-center hover:translate-x-2 transition">預約諮詢 →</a>
+                    </div>
+                </div>
+                <!-- Laser -->
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 flex flex-col md:flex-row">
+                    <div class="md:w-1/2 overflow-hidden">
+                        <img src="https://i.postimg.cc/WpnNbNpg/liao-cheng-xiang-mu-mo-te5.jpg" alt="雷射美膚" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-xl font-medium mb-3">精準雷射美膚</h3>
+                        <p class="text-gray-500 text-sm mb-4 font-normal">針對斑點、毛孔、暗沉等肌膚困擾，提供皮秒、淨膚等高效雷射方案。</p>
+                        <a href="#" class="text-bronze font-medium inline-flex items-center hover:translate-x-2 transition">了解更多 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. Medical Team ==================== -->
+    <section id="team" class="py-20 md:py-20 py-12 bg-stone-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-medium mb-4">專業醫師團隊</h2>
+                <div class="w-20 h-1 bg-bronze mx-auto"></div>
+            </div>
+
+            <!-- Nav Buttons -->
+            <div class="nav-btn left-0" onclick="scrollCarousel('teamCarousel', 'left')">‹</div>
+            <div class="nav-btn right-0" onclick="scrollCarousel('teamCarousel', 'right')">›</div>
+            
+            <div id="teamCarousel" class="flex overflow-x-auto space-x-6 pb-12 scrollbar-hide snap-x scroll-smooth">
+                <!-- Dr. Huang -->
+                <div class="flex-none w-64 snap-center group">
+                    <a href="https://tpshow.net/huangyuting-36006" target="_blank" class="block">
+                        <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                            <img src="https://i.postimg.cc/CMBKJTwH/huang-yu-ting-yi-shi.jpg" alt="黃鈺婷 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-medium text-center group-hover:text-bronze transition">黃鈺婷 醫師</h3>
+                        <p class="text-sm text-gray-500 text-center font-normal">皮膚科專科醫師</p>
+                    </a>
+                </div>
+                <!-- Dr. You -->
+                <div class="flex-none w-64 snap-center group">
+                    <a href="https://tpshow.net/youshunran-36014" target="_blank" class="block">
+                        <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                            <img src="https://i.postimg.cc/QN9MSGjQ/you-shun-ran-yi-shi.jpg" alt="游舜然 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-medium text-center group-hover:text-bronze transition">游舜然 醫師</h3>
+                        <p class="text-sm text-gray-500 text-center font-normal">美國美容醫學醫學會 專科醫師</p>
+                    </a>
+                </div>
+                <!-- Dr. Lin -->
+                <div class="flex-none w-64 snap-center group">
+                    <a href="https://tpshow.net/linhanwen-36011" target="_blank" class="block">
+                        <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                            <img src="https://i.postimg.cc/8kJCwQTM/lin-han-wen-yi-shi.jpg" alt="林漢文 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-medium text-center group-hover:text-bronze transition">林漢文 醫師</h3>
+                        <p class="text-sm text-gray-500 text-center font-normal">微整形美塑醫學會秘書長</p>
+                    </a>
+                </div>
+                <!-- Dr. Hou -->
+                <div class="flex-none w-64 snap-center group">
+                    <a href="https://tpshow.net/houhsienqi-36019" target="_blank" class="block">
+                        <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                            <img src="https://i.postimg.cc/QN9MSGjc/hou-xian-qi-yi-shi.jpg" alt="侯憲棋 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-lg font-medium text-center group-hover:text-bronze transition">侯憲棋 醫師</h3>
+                        <p class="text-sm text-gray-500 text-center font-normal">醫學美容整外專科醫師</p>
+                    </a>
+                </div>
+                <!-- Dr. Wu -->
+                <div class="flex-none w-64 snap-center group">
+                    <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                        <img src="https://i.postimg.cc/QN9MSGjK/wu-nian-xun-yi-shi.jpg" alt="吳念勳 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-medium text-center">吳念勳 醫師</h3>
+                    <p class="text-sm text-gray-500 text-center font-normal">美國美容醫學醫學會 專科醫師</p>
+                </div>
+                <!-- Dr. Chen -->
+                <div class="flex-none w-64 snap-center group">
+                    <div class="relative mb-4 overflow-hidden rounded-2xl shadow-md">
+                        <img src="https://i.postimg.cc/wv9WftGq/chen-xiang-jun-yi-shi-(1).jpg" alt="陳翔俊 醫師" class="w-full aspect-[3/4] object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-medium text-center">陳翔俊 醫師</h3>
+                    <p class="text-sm text-gray-500 text-center font-normal">微整形注射／光療治療</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. Aesthetic Column (Blog) ==================== -->
+    <section id="blog" class="py-20 md:py-20 py-12 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-medium mb-4">美學專欄</h2>
+                <div class="w-20 h-1 bg-bronze mx-auto"></div>
+            </div>
+
+            <!-- Blog Categories -->
+            <div class="space-y-20">
+                <!-- Category: Entry/Trend -->
+                <div>
+                    <h3 class="text-2xl font-medium mb-8 pl-4 border-l-4 border-bronze">醫美入門／趨勢</h3>
+                    <div class="relative">
+                        <div class="nav-btn left-0" onclick="scrollCarousel('blogCarousel1', 'left')">‹</div>
+                        <div class="nav-btn right-0" onclick="scrollCarousel('blogCarousel1', 'right')">›</div>
+                        <div id="blogCarousel1" class="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide snap-x scroll-smooth">
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/bvy6wfYD/yi-mei-ru-men1.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">3 分鐘帶妳了解醫美是什麼以及醫美療程與醫美安全常見問題</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">帶妳快速了解醫美是什麼、常見醫美項目排行、如何挑選醫美療程...</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37261" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/hGDCtR4L/yi-mei-ru-men2.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">常見醫美項目排行｜如何挑選適合的醫美療程？</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">如何挑選醫美療程？醫美診所怎麼選？醫師推薦哪些項目？</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37279" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/1zmW31RN/yi-mei-yi-ding-yao-qu-han-guo.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">醫美一定要去韓國嗎？跟台北醫美差在哪裡？</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">分析韓國醫美與台北醫美的差異，幫助您做出最適合的選擇。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37661" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/CxHP0xg9/tai-bei-yi-mei-tui-jian.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">台北醫美推薦與醫美醫生推薦總整理</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">整理台北地區優質醫美診所與專業醫師名單，提供您參考。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37447" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category: Injection -->
+                <div>
+                    <h3 class="text-2xl font-medium mb-8 pl-4 border-l-4 border-bronze">微整注射</h3>
+                    <div class="relative">
+                        <div class="nav-btn left-0" onclick="scrollCarousel('blogCarousel2', 'left')">‹</div>
+                        <div class="nav-btn right-0" onclick="scrollCarousel('blogCarousel2', 'right')">›</div>
+                        <div id="blogCarousel2" class="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide snap-x scroll-smooth">
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/fRj2sRss/xing-ren-suan-huan-fu.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">醫美項目大解密｜杏仁酸煥膚是什麼？杏仁酸可以每天用嗎</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">深入了解杏仁酸煥膚的原理、效果以及日常保養建議。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37502" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/7ZMs4Z4Z/bo-niao-suan.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">玻尿酸是什麼？玻尿酸功效、維持時間與常見問題一次了解</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">玻尿酸功效有哪些？維持多久？玻尿酸副作用有哪些？一次帶妳了解！</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37666" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/qvXbrvrT/rou-du-gan-jun.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">肉毒桿菌是什麼？肉毒功效、施打部位與常見問題一次了解</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">肉毒桿菌功效有哪些？肉毒可以打哪裡？肉毒多久見效？一次帶妳了解！</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37672" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/N0sNjvGj/ni-shi-zhen.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">醫美項目大解密｜逆時針是什麼？和玻尿酸、膠原蛋白增生劑有什麼不同</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">解析逆時針的獨特之處及其與傳統填充物的差異。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37299" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category: Laser/Energy -->
+                <div>
+                    <h3 class="text-2xl font-medium mb-8 pl-4 border-l-4 border-bronze">光電療程</h3>
+                    <div class="relative">
+                        <div class="nav-btn left-0" onclick="scrollCarousel('blogCarousel3', 'left')">‹</div>
+                        <div class="nav-btn right-0" onclick="scrollCarousel('blogCarousel3', 'right')">›</div>
+                        <div id="blogCarousel3" class="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide snap-x scroll-smooth">
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/Zq3vyCf9/zhang-dou-dou.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">臉部改善推薦｜臉上長痘痘一直好不了怎麼辦？</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">針對頑固痘痘問題，提供專業的醫美改善建議與療程方案。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/medicalbeauty-37673" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/Nj7JtjcS/shui-pi-miao.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">水皮秒是什麼？專業醫師帶你了解水皮秒功效與優點</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">探索水皮秒如何改善膚質，實現細緻透亮的肌膚效果。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/picosecond-35787" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/1zmW31RK/CO2.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">CO2 飛梭雷射｜告別毛孔粗大與痘疤的專業選擇</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">深入了解飛梭雷射如何重建肌膚平滑度，改善毛孔與疤痕。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/CO2-35771" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/k5JjgPMD/tong-yan-zhen.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">4D 童顏針｜啟動肌膚膠原蛋白增生的秘密</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">了解童顏針如何自然填補凹陷，重塑臉部年輕輪廓。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/4D-Sculptra-35768" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category: Plastic Surgery -->
+                <div>
+                    <h3 class="text-2xl font-medium mb-8 pl-4 border-l-4 border-bronze">整形外科</h3>
+                    <div class="relative">
+                        <div class="nav-btn left-0" onclick="scrollCarousel('blogCarousel4', 'left')">‹</div>
+                        <div class="nav-btn right-0" onclick="scrollCarousel('blogCarousel4', 'right')">›</div>
+                        <div id="blogCarousel4" class="flex overflow-x-auto space-x-6 pb-6 scrollbar-hide snap-x scroll-smooth">
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/3w8LxQrb/shuang-yan-pi.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">割雙眼皮手術｜打造深邃有神的完美眼型</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">專業醫師解析雙眼皮手術方式，助您找回自信電眼。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/double-eyelid-surgery-35757" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/Sx7T4x4K/zhen-zhu-bo.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">珍珠波隆乳｜實現自然豐盈與柔軟觸感的專業選擇</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">深入了解珍珠波隆乳的特性與優勢，打造理想胸型。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/PERLE-35726" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/CxVP9fWX/nu-wang-bo.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">女王波隆乳｜展現極致美感與自信的隆乳方案</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">解析女王波隆乳如何根據個人身形客製化完美曲線。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/Mentor-35727" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-none w-80 snap-center h-full">
+                                <div class="bg-white rounded-2xl overflow-hidden shadow-lg h-full flex flex-col">
+                                    <img src="https://i.postimg.cc/6QWHpx6b/SVF-zi-ti-zhi-fang-long-ru.jpg" class="w-full h-48 object-cover">
+                                    <div class="p-6 flex-grow flex flex-col">
+                                        <h4 class="font-medium mb-2 line-clamp-2">SVF 自體脂肪隆乳｜運用自身資源打造自然美胸</h4>
+                                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">了解 SVF 自體脂肪移植技術，實現瘦身與豐胸雙重效果。</p>
+                                        <div class="mt-auto"><a href="https://tpshow.net/SVF-35730" class="text-bronze text-sm font-medium">閱讀全文 →</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 7. Aesthetic Testimonials ==================== -->
+    <section id="testimonials" class="py-24 md:py-24 py-12 bg-stone-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-medium mb-4">美學見證</h2>
+                <div class="w-20 h-1 bg-bronze mx-auto"></div>
+            </div>
+
+            <!-- ONDA Cases (8 Cases) -->
+            <div class="mb-20">
+                <h3 class="text-xl font-medium mb-8 text-center text-gray-600 italic">昂達超微波 (ONDA) 官方案例</h3>
+                <div class="relative">
+                    <div class="nav-btn left-0" onclick="scrollCarousel('ondaCarousel', 'left')">‹</div>
+                    <div class="nav-btn right-0" onclick="scrollCarousel('ondaCarousel', 'right')">›</div>
+                    <div id="ondaCarousel" class="flex overflow-x-auto space-x-4 pb-6 scrollbar-hide snap-x scroll-smooth">
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/Gmcqn13P/li-ji.png" alt="立即效果" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">立即效果</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/dVq4cKQB/lun-kuo-xian.png" alt="輪廓線" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">輪廓線</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/SxDVytJ4/shuang-xia-ba.png" alt="雙下巴" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">雙下巴</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/prb3D1f0/ONDA-PRO-BA-ju-pi1.png" alt="橘皮改善" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">橘皮改善</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/4ykjzF6q/ce-yao.png" alt="側腰" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">側腰</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/rpHBppKz/shou-bi.png" alt="手臂" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">手臂</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/Rh52cb7b/fu-bu.png" alt="腹部" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">腹部</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/qqVW8Zcp/tui-bu-ju-pi.png" alt="腿部橘皮" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">腿部橘皮</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RHA Cases (5 Cases) -->
+            <div>
+                <h3 class="text-xl font-medium mb-8 text-center text-gray-600 italic">RHA (隱形玻尿酸) 官方案例</h3>
+                <div class="relative">
+                    <div class="nav-btn left-0" onclick="scrollCarousel('rhaCarousel', 'left')">‹</div>
+                    <div class="nav-btn right-0" onclick="scrollCarousel('rhaCarousel', 'right')">›</div>
+                    <div id="rhaCarousel" class="flex overflow-x-auto space-x-4 pb-6 scrollbar-hide snap-x scroll-smooth">
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/QMLVkMKx/1-RHA1-X1-LOWERFACE-2011.jpg" alt="下臉輪廓" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">下臉輪廓</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/wvgvZbk4/2-RHAKISS-MARIE-FACE-NEUTRE-DUO-RVB-2-B-A.jpg" alt="唇部/中臉" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">唇部/中臉</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/26G6DFcC/3-RHA2-RHA3-STE-MIDTHIRD-2018-POSITIONS.jpg" alt="中臉拉提" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">中臉拉提</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/KvH1jfZp/4-RH3-MRA-LOWERTHIRD-2020-POSITION-5.jpg" alt="下顎線" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">下顎線</p>
+                        </div>
+                        <div class="flex-none w-72 md:w-96 snap-center bg-white p-4 rounded-xl shadow-sm">
+                            <img src="https://i.postimg.cc/26r6MXwD/5-KISS-FAI-MIDTHIRD-2018-POSITION1.jpg" alt="法令紋/動態紋" class="w-full h-auto rounded-lg shadow-inner">
+                            <p class="text-center text-sm text-gray-600 mt-3 font-normal">法令紋/動態紋</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 8. Footer ==================== -->
+    <footer class="bg-stone-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <img src="https://i.postimg.cc/L52YGx9V/bei-xiu-logo.png" alt="北秀醫美 Logo" class="h-12 mb-6 brightness-0 invert">
+                    <p class="text-gray-400 font-normal leading-relaxed mb-6">
+                        北秀醫美健康管理診所，傳承秀傳醫療體系專業基因，致力於提供最精準、安全且具美學素養的醫療美容服務。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://lin.ee/BW7xMM6" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-bronze transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738s-12 4.369-12 9.738c0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.047c-.052.31-.252 1.212 1.084.661 1.335-.55 7.203-4.241 9.831-7.254 1.744-2.001 2.124-3.993 2.124-5.744z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/topshowhealth" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-bronze transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/topshow_get_fit/" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-bronze transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07M12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.355 2.618 6.778 6.98 6.978 1.28.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.199-4.359-2.612-6.77-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium mb-6">快速連結</h4>
+                    <ul class="space-y-4 text-gray-400 font-normal text-sm">
+                        <li><a href="#about" class="hover:text-white transition">品牌哲學</a></li>
+                        <li><a href="#treatments" class="hover:text-white transition">核心療程</a></li>
+                        <li><a href="#team" class="hover:text-white transition">醫師團隊</a></li>
+                        <li><a href="#blog" class="hover:text-white transition">美學專欄</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium mb-6">聯絡資訊</h4>
+                    <ul class="space-y-4 text-gray-400 font-normal text-sm">
+                        <li>台北市大安區光復南路 116 巷 5 號 7 樓<br>（捷運國父紀念館站 1 號出口步行 3 分鐘）</li>
+                        <li>(02) 6613-1313</li>
+                        <li><a href="https://lin.ee/BW7xMM6" target="_blank" class="hover:text-white transition">立即加入好友預約</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-xs">
+                <p>© 2024 北秀健康管理診所. All Rights Reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">隱私政策</a>
+                    <a href="#" class="hover:text-white">服務條款</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Sidebar Buttons -->
+    <div class="fixed right-6 bottom-24 z-50 flex flex-col space-y-4">
+        <!-- LINE Button -->
+        <a href="https://lin.ee/BW7xMM6" target="_blank" class="group relative flex items-center justify-center transition-transform hover:scale-110">
+            <img src="https://image.fevercdn.com?bucket=picture-original.fevercdn.com&filepath=feversocial%2F45064%2F38407%2Fbfb2e594ca4b8aa9b1510741.png" alt="LINE" class="w-[60px] h-auto drop-shadow-lg">
+            <span class="absolute right-full mr-3 bg-white text-gray-800 px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition shadow-md whitespace-nowrap pointer-events-none">LINE 預約</span>
+        </a>
+        <!-- FB Button -->
+        <a href="https://www.facebook.com/topshowhealth" target="_blank" class="group relative flex items-center justify-center transition-transform hover:scale-110">
+            <img src="https://image.fevercdn.com?bucket=picture-original.fevercdn.com&filepath=feversocial%2F45064%2F38407%2F50119e6f175936e40f028479.png" alt="FB" class="w-[60px] h-auto drop-shadow-lg">
+            <span class="absolute right-full mr-3 bg-white text-gray-800 px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition shadow-md whitespace-nowrap pointer-events-none">FB 粉絲頁</span>
+        </a>
+        <!-- Phone Button -->
+        <a href="tel:0266131313" class="group relative flex items-center justify-center transition-transform hover:scale-110">
+            <img src="https://image.fevercdn.com?bucket=picture-original.fevercdn.com&filepath=feversocial%2F45064%2F38407%2F47df97551a2ac5d3af48c0f0.png" alt="Phone" class="w-[60px] h-auto drop-shadow-lg">
+            <span class="absolute right-full mr-3 bg-white text-gray-800 px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition shadow-md whitespace-nowrap pointer-events-none">撥打電話</span>
+        </a>
+    </div>
+
+    <script>
+        // Hero Carousel Logic
+        let currentHero = 0;
+        const totalHeroes = 3;
+        const bannerLinks = [
+            "https://tpshow.net/ondapro-38600",
+            "https://tpshow.net/density-38407",
+            "https://tpshow.net/Profhilo-38615"
+        ];
+
+        function setHero(index) {
+            document.getElementById(`heroBg${currentHero}`).classList.remove('active');
+            document.getElementById(`dot${currentHero}`).classList.remove('bg-white');
+            document.getElementById(`dot${currentHero}`).classList.add('bg-white/50');
+            
+            currentHero = index;
+            
+            document.getElementById(`heroBg${currentHero}`).classList.add('active');
+            document.getElementById(`dot${currentHero}`).classList.remove('bg-white/50');
+            document.getElementById(`dot${currentHero}`).classList.add('bg-white');
+            document.getElementById('heroBannerLink').href = bannerLinks[currentHero];
+        }
+
+        setInterval(() => {
+            let next = (currentHero + 1) % totalHeroes;
+            setHero(next);
+        }, 5000);
+
+        // Initial indicator state
+        document.getElementById('dot0').classList.remove('bg-white/50');
+        document.getElementById('dot0').classList.add('bg-white');
+
+        // Carousel Scroll Logic
+        function scrollCarousel(id, direction) {
+            const el = document.getElementById(id);
+            const scrollAmount = el.offsetWidth * 0.8;
+            el.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // Environment Auto-carousel Logic
+        const envCarousel = document.getElementById('environmentCarousel');
+        let envAutoPlay = setInterval(autoScrollEnv, 2000);
+
+        function autoScrollEnv() {
+            if (!envCarousel) return;
+            const maxScrollLeft = envCarousel.scrollWidth - envCarousel.clientWidth;
+            
+            if (envCarousel.scrollLeft >= maxScrollLeft - 10) {
+                // Reset to start if reached the end
+                envCarousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                // Scroll by one item width approximately
+                const itemWidth = envCarousel.querySelector('div').offsetWidth + 24; // width + gap
+                envCarousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+            }
+        }
+
+        // Pause auto-play on user interaction
+        envCarousel.addEventListener('mouseenter', () => clearInterval(envAutoPlay));
+        envCarousel.addEventListener('mouseleave', () => envAutoPlay = setInterval(autoScrollEnv, 2000));
+        envCarousel.addEventListener('touchstart', () => clearInterval(envAutoPlay));
+        envCarousel.addEventListener('touchend', () => {
+            clearInterval(envAutoPlay);
+            envAutoPlay = setInterval(autoScrollEnv, 2000);
+        });
+
+        // Mobile Menu Logic
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
