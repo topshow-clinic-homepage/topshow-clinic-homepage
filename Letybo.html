@@ -177,6 +177,80 @@
             background-color: #f9fafb;
         }
         
+        /* Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .carousel-wrapper {
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 16px;
+        }
+        .carousel-slide {
+            flex: 0 0 calc(100% - 16px);
+            min-width: calc(100% - 16px);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: background-color 0.3s;
+            z-index: 10;
+        }
+        .carousel-button:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+        .carousel-button.prev {
+            left: 12px;
+        }
+        .carousel-button.next {
+            right: 12px;
+        }
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .carousel-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-indicator.active {
+            background-color: #1f2937;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .hero-content h1 {
@@ -333,6 +407,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Proof Carousel Section -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-medium text-gray-900 mb-6 text-center">患者見證</h3>
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/rsLYbw6Z/Proof1.jpg" alt="患者見證 1">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/wMdbPjKF/Proof2.jpg" alt="患者見證 2">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/rsLYbw6N/Proof3.jpg" alt="患者見證 3">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/9M9nJqkL/Proof4.jpg" alt="患者見證 4">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/brjFMwXH/Proof5.jpg" alt="患者見證 5">
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="https://i.postimg.cc/mkG6qgx8/Proof6.jpg" alt="患者見證 6">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button prev" id="carouselPrev">❮</button>
+                    <button class="carousel-button next" id="carouselNext">❯</button>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
             </div>
 
             <!-- Product Information & Global Approval -->
@@ -841,6 +947,49 @@
     </footer>
 
     <script>
+        // Carousel Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        const track = document.getElementById('carouselTrack');
+        const indicatorsContainer = document.getElementById('carouselIndicators');
+        
+        // Create indicators
+        for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
+            indicator.onclick = () => goToSlide(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+        
+        function updateCarousel() {
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+            
+            // Update indicators
+            document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+        
+        document.getElementById('carouselNext').addEventListener('click', nextSlide);
+        document.getElementById('carouselPrev').addEventListener('click', prevSlide);
+        
         // FAQ Data
         const faqData = [
             {
