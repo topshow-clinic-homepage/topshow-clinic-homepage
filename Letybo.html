@@ -268,9 +268,15 @@
             background-color: #d1d5db;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: none;
         }
         .carousel-indicator.active {
             background-color: #1f2937;
+        }
+        @media (max-width: 768px) {
+            .carousel-indicator {
+                display: inline-block;
+            }
         }
         
         /* Responsive */
