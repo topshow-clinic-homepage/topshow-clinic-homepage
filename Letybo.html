@@ -987,8 +987,16 @@
             indicatorsContainer.appendChild(indicator);
         }
         
+        function getSlidesPerView() {
+            const width = window.innerWidth;
+            if (width >= 1200) return 6;
+            if (width >= 768) return 5;
+            if (width >= 480) return 3;
+            return 2;
+        }
+        
         function updateCarousel() {
-            const slideWidth = 100 / 6;
+            const slideWidth = 100 / totalSlides;
             const offset = -currentSlide * slideWidth;
             track.style.transform = `translateX(${offset}%)`;
             
@@ -999,12 +1007,14 @@
         }
         
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
+            const slidesPerView = getSlidesPerView();
+            currentSlide = Math.min(currentSlide + slidesPerView, totalSlides - slidesPerView);
             updateCarousel();
         }
         
         function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            const slidesPerView = getSlidesPerView();
+            currentSlide = Math.max(currentSlide - slidesPerView, 0);
             updateCarousel();
         }
         
